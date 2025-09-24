@@ -2,14 +2,10 @@ import { ArrowRight, Download, Sparkles, Zap, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       {/* Hero Section */}
-      <section 
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50"
-      >
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl animate-float"></div>
@@ -35,7 +31,7 @@ const Index = () => {
             {/* Subtitle */}
             <div className="max-w-3xl mx-auto space-y-4">
               <p className="text-xl sm:text-2xl text-gray-600 font-medium">
-                <span className="text-blue-600 font-semibold">AI Engineer</span> • 
+                <span className="text-blue-600 font-semibold">AI/ML Engineer</span> • 
                 <span className="text-emerald-600 font-semibold"> Software Engineer</span> • 
                 <span className="text-gray-800 font-semibold"> Researcher</span>
               </p>
@@ -62,23 +58,27 @@ const Index = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-16 max-w-2xl mx-auto">
-              {[
-                { icon: Brain, label: "AI Models", value: "15+" },
-                { icon: Zap, label: "Projects", value: "50+" },
-                { icon: Sparkles, label: "Experience", value: "5+ Years" },
-              ].map((stat, index) => (
-                <div 
-                  key={stat.label} 
-                  className="text-center space-y-2 animate-scale-in"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
+              {[{
+              icon: Brain,
+              label: "AI Models",
+              value: "15+"
+            }, {
+              icon: Zap,
+              label: "Projects",
+              value: "50+"
+            }, {
+              icon: Sparkles,
+              label: "Experience",
+              value: "5+ Years"
+            }].map((stat, index) => <div key={stat.label} className="text-center space-y-2 animate-scale-in" style={{
+              animationDelay: `${index * 0.2}s`
+            }}>
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/80 border border-gray-200/50 shadow-sm">
                     <stat.icon className="h-6 w-6 text-blue-600" />
                   </div>
                   <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
                   <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -110,8 +110,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
