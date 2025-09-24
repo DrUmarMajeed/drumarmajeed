@@ -8,44 +8,38 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section 
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%), url(${heroBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
-        }}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50"
       >
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float-delay"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/5 to-secondary/5 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl animate-float-delay"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/40 to-emerald-100/40 rounded-full blur-3xl"></div>
         </div>
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="space-y-8 animate-fade-in-up">
             {/* Greeting */}
-            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-glass border border-white/20 backdrop-blur-sm">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">Available for new opportunities</span>
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/50 backdrop-blur-sm shadow-sm">
+              <Sparkles className="h-4 w-4 text-blue-600" />
+              <span className="text-sm font-medium text-gray-700">Available for new opportunities</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="block">Hi, I'm </span>
-              <span className="block text-gradient-hero">Umar Majeed 👋</span>
+              <span className="block text-gray-800">Hi, I'm </span>
+              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">Umar Majeed 👋</span>
             </h1>
 
             {/* Subtitle */}
             <div className="max-w-3xl mx-auto space-y-4">
-              <p className="text-xl sm:text-2xl text-muted-foreground font-medium">
-                <span className="text-primary font-semibold">AI Engineer</span> • 
-                <span className="text-secondary font-semibold"> Software Engineer</span> • 
-                <span className="text-foreground font-semibold"> Researcher</span>
+              <p className="text-xl sm:text-2xl text-gray-600 font-medium">
+                <span className="text-blue-600 font-semibold">AI Engineer</span> • 
+                <span className="text-emerald-600 font-semibold"> Software Engineer</span> • 
+                <span className="text-gray-800 font-semibold"> Researcher</span>
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 Transforming complex problems into elegant solutions with cutting-edge AI and software engineering. 
                 Building the future, one algorithm at a time.
               </p>
@@ -58,7 +52,7 @@ const Index = () => {
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               
-              <Button variant="outline" className="btn-glass group" asChild>
+              <Button variant="outline" className="bg-white/80 border-gray-300 text-gray-700 hover:bg-white hover:border-gray-400 transition-all duration-200 group" asChild>
                 <a href="/resume.pdf" download>
                   <Download className="mr-2 h-4 w-4" />
                   <span>Download CV</span>
@@ -78,11 +72,11 @@ const Index = () => {
                   className="text-center space-y-2 animate-scale-in"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 backdrop-blur-sm border border-white/20">
-                    <stat.icon className="h-6 w-6 text-primary" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/80 border border-gray-200/50 shadow-sm">
+                    <stat.icon className="h-6 w-6 text-blue-600" />
                   </div>
-                  <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
+                  <div className="text-sm text-gray-600">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -91,8 +85,8 @@ const Index = () => {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
+          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-blue-600 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
