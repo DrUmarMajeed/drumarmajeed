@@ -32,8 +32,8 @@ const Index = () => {
             <div className="max-w-3xl mx-auto space-y-4">
               <p className="text-xl sm:text-2xl text-gray-600 font-medium">
                 <span className="text-blue-600 font-semibold">AI/ML Engineer</span> • 
-                <span className="text-emerald-600 font-semibold"> Software Engineer</span> • 
-                <span className="text-gray-800 font-semibold"> Researcher</span>
+                <span className="text-emerald-600 font-semibold"> Aspiring PhD Scholar</span> • 
+                <span className="text-gray-800 font-semibold"> AI/ML Researcher</span>
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
                 Transforming complex problems into elegant solutions with cutting-edge AI and software engineering. 
