@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import heroBg from "@/assets/hero-bg.jpg";
 import profileImage from "@/assets/profile-image.jpg";
+
 const Index = () => {
-  return <div className="min-h-screen">
+  return (
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
         {/* Animated Background Elements */}
@@ -16,10 +18,10 @@ const Index = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-8 animate-fade-in-up">
-            {/* Profile Image */}
-            <div className="flex justify-center mb-8">
+            {/* Profile Image - Mobile Only */}
+            <div className="flex justify-center mb-8 lg:hidden">
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 shadow-lg backdrop-blur-sm">
                 <img 
                   src={profileImage} 
@@ -30,88 +32,102 @@ const Index = () => {
             </div>
 
             {/* Greeting */}
-            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/50 backdrop-blur-sm shadow-sm">
-              <Sparkles className="h-4 w-4 text-blue-600" />
-              <span className="text-sm font-medium text-gray-700">Available for new opportunities</span>
+            <div className="flex justify-center">
+              <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/50 backdrop-blur-sm shadow-sm">
+                <Sparkles className="h-4 w-4 text-blue-600" />
+                <span className="text-sm font-medium text-gray-700">Available for new opportunities</span>
+              </div>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="block text-gray-800">Hi, I'm </span>
-              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">Umar Majeed 👋</span>
-            </h1>
+            {/* Main Content - Desktop Layout */}
+            <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 text-center lg:text-left">
+              {/* Profile Image - Desktop Only */}
+              <div className="hidden lg:block">
+                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-white/20 shadow-lg backdrop-blur-sm animate-pulse">
+                  <img 
+                    src={profileImage} 
+                    alt="Umar Majeed - AI/ML Engineer" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
 
-            {/* Subtitle */}
-            <div className="max-w-3xl mx-auto space-y-4">
-              <p className="text-xl sm:text-2xl text-gray-600 font-medium">
-                <span className="text-blue-600 font-semibold">AI/ML Engineer</span> • 
-                <span className="text-emerald-600 font-semibold"> Aspiring PhD Scholar</span> • 
-                <span className="text-gray-800 font-semibold"> AI/ML Researcher</span>
-              </p>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Transforming complex problems into elegant solutions with cutting-edge AI and software engineering. 
-                Building the future, one algorithm at a time.
-              </p>
-            </div>
+              {/* Text Content */}
+              <div className="flex-1 lg:max-w-2xl">
+                {/* Main Headline */}
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+                  <span className="block text-gray-800">Hi, I'm </span>
+                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">Umar Majeed 👋</span>
+                </h1>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-              <Link to="/projects" className="btn-hero group">
-                <span>View My Work</span>
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              
-              <Button variant="outline" className="bg-white/80 border-gray-300 text-gray-700 hover:bg-white hover:border-gray-400 transition-all duration-200 group" asChild>
-                <a href="/resume.pdf" download>
-                  <Download className="mr-2 h-4 w-4" />
-                  <span>Download CV</span>
-                </a>
-              </Button>
+                {/* Subtitle */}
+                <div className="space-y-4 mt-6">
+                  <p className="text-xl sm:text-2xl text-gray-600 font-medium">
+                    <span className="text-blue-600 font-semibold">AI/ML Engineer</span> • 
+                    <span className="text-emerald-600 font-semibold"> Aspiring PhD Scholar</span> • 
+                    <span className="text-gray-800 font-semibold"> AI/ML Researcher</span>
+                  </p>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Transforming complex problems into elegant solutions with cutting-edge AI and software engineering. 
+                    Building the future, one algorithm at a time.
+                  </p>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center lg:items-start lg:justify-start justify-center gap-4 pt-8">
+                  <Link to="/projects" className="btn-hero group">
+                    <span>View My Work</span>
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  
+                  <Button variant="outline" className="bg-white/80 border-gray-300 text-gray-700 hover:bg-white hover:border-gray-400 transition-all duration-200 group" asChild>
+                    <a href="/resume.pdf" download>
+                      <Download className="mr-2 h-4 w-4" />
+                      <span>Download CV</span>
+                    </a>
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 pt-16 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 pt-16 max-w-4xl mx-auto text-center">
               {[{
-              icon: Brain,
-              label: "AI Models",
-              value: "15+"
-            }, {
-              icon: Zap,
-              label: "Projects",
-              value: "50+"
-            }, {
-              icon: Sparkles,
-              label: "Experience",
-              value: "5+ Years"
-            }, {
-              icon: Code2,
-              label: "LeetCode",
-              value: "700+"
-            }, {
-              icon: GraduationCap,
-              label: "Teaching Hours",
-              value: "200+"
-            }, {
-              icon: Trophy,
-              label: "Hackathons",
-              value: "20+"
-            }].map((stat, index) => <div key={stat.label} className="text-center space-y-2 animate-scale-in" style={{
-              animationDelay: `${index * 0.1}s`
-            }}>
+                icon: Brain,
+                label: "AI Models",
+                value: "15+"
+              }, {
+                icon: Zap,
+                label: "Projects",
+                value: "50+"
+              }, {
+                icon: Sparkles,
+                label: "Experience",
+                value: "5+ Years"
+              }, {
+                icon: Code2,
+                label: "LeetCode",
+                value: "700+"
+              }, {
+                icon: GraduationCap,
+                label: "Teaching Hours",
+                value: "200+"
+              }, {
+                icon: Trophy,
+                label: "Hackathons",
+                value: "20+"
+              }].map((stat, index) => (
+                <div key={stat.label} className="text-center space-y-2 animate-scale-in" style={{
+                  animationDelay: `${index * 0.1}s`
+                }}>
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/80 border border-gray-200/50 shadow-sm">
                     <stat.icon className="h-6 w-6 text-blue-600" />
                   </div>
                   <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
                   <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>)}
+                </div>
+              ))}
             </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-blue-600 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
@@ -216,6 +232,8 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
