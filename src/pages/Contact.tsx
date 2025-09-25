@@ -5,6 +5,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from '@emailjs/browser';
+import { z } from 'zod';
+
+// Initialize EmailJS
+emailjs.init("Du86APy14CLJArSxY");
+
+// Form validation schema
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
+  email: z.string().trim().email("Please enter a valid email address").max(100, "Email must be less than 100 characters"),
+  subject: z.string().trim().min(5, "Subject must be at least 5 characters").max(100, "Subject must be less than 100 characters"),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters")
+});
 
 const Contact = () => {
   const { toast } = useToast();
@@ -60,18 +73,58 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    
+    try {
+      // Validate form data
+      const validatedData = contactSchema.parse(formData);
+      
+      setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        'service_7odjqks', // Service ID
+        'template_049iju3', // Template ID
+        {
+          from_name: validatedData.name,
+          from_email: validatedData.email,
+          subject: validatedData.subject,
+          message: validatedData.message,
+          to_name: 'Umar', // Replace with your name
+        }
+      );
 
-    toast({
-      title: "Message sent successfully! 🎉",
-      description: "Thank you for reaching out. I'll get back to you within 24 hours.",
-    });
+      console.log('Email sent successfully:', result.status, result.text);
+      
+      toast({
+        title: "Message sent successfully! 🎉",
+        description: "Thank you for reaching out. I'll get back to you within 24 hours.",
+      });
 
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
+      // Reset form
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      
+    } catch (error) {
+      console.error('Error sending email:', error);
+      
+      if (error instanceof z.ZodError) {
+        // Handle validation errors
+        const firstError = error.errors[0];
+        toast({
+          title: "Validation Error",
+          description: firstError.message,
+          variant: "destructive",
+        });
+      } else {
+        // Handle EmailJS errors
+        toast({
+          title: "Failed to send message",
+          description: "Something went wrong. Please try again or contact me directly via email.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
