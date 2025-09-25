@@ -1,7 +1,9 @@
-import { ArrowRight, Download, Sparkles, Zap, Brain } from "lucide-react";
+import { ArrowRight, Download, Sparkles, Zap, Brain, Code2, GraduationCap, Trophy, ExternalLink, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import heroBg from "@/assets/hero-bg.jpg";
+import profileImage from "@/assets/profile-image.jpg";
 const Index = () => {
   return <div className="min-h-screen">
       {/* Hero Section */}
@@ -16,6 +18,17 @@ const Index = () => {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="space-y-8 animate-fade-in-up">
+            {/* Profile Image */}
+            <div className="flex justify-center mb-8">
+              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 shadow-lg backdrop-blur-sm">
+                <img 
+                  src={profileImage} 
+                  alt="Umar Majeed - AI/ML Engineer" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
             {/* Greeting */}
             <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/50 backdrop-blur-sm shadow-sm">
               <Sparkles className="h-4 w-4 text-blue-600" />
@@ -57,7 +70,7 @@ const Index = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-16 max-w-2xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 pt-16 max-w-4xl mx-auto">
               {[{
               icon: Brain,
               label: "AI Models",
@@ -70,8 +83,20 @@ const Index = () => {
               icon: Sparkles,
               label: "Experience",
               value: "5+ Years"
+            }, {
+              icon: Code2,
+              label: "LeetCode",
+              value: "700+"
+            }, {
+              icon: GraduationCap,
+              label: "Teaching Hours",
+              value: "200+"
+            }, {
+              icon: Trophy,
+              label: "Hackathons",
+              value: "20+"
             }].map((stat, index) => <div key={stat.label} className="text-center space-y-2 animate-scale-in" style={{
-              animationDelay: `${index * 0.2}s`
+              animationDelay: `${index * 0.1}s`
             }}>
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/80 border border-gray-200/50 shadow-sm">
                     <stat.icon className="h-6 w-6 text-blue-600" />
@@ -105,6 +130,87 @@ const Index = () => {
             </p>
             <Link to="/about" className="btn-secondary-hero inline-flex items-center group">
               <span>Learn More About Me</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Work Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-8 mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              Recent <span className="text-gradient-primary">Work</span>
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
+              Explore some of my latest projects showcasing AI/ML innovation and software engineering excellence
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "AI-Powered Recommendation System",
+                description: "Built a machine learning recommendation engine using collaborative filtering and neural networks, achieving 95% accuracy in user preference prediction.",
+                tech: ["Python", "TensorFlow", "React", "FastAPI"],
+                link: "#",
+                github: "#"
+              },
+              {
+                title: "Real-time Chat Application",
+                description: "Developed a scalable real-time messaging platform with WebSocket integration, supporting 10K+ concurrent users.",
+                tech: ["Node.js", "Socket.io", "React", "MongoDB"],
+                link: "#",
+                github: "#"
+              },
+              {
+                title: "Computer Vision Analytics",
+                description: "Created an advanced image recognition system for automated quality control in manufacturing processes.",
+                tech: ["OpenCV", "PyTorch", "Docker", "AWS"],
+                link: "#",
+                github: "#"
+              }
+            ].map((project, index) => (
+              <Card key={project.title} className="group hover:shadow-lg transition-all duration-300 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                <CardHeader>
+                  <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">
+                    {project.title}
+                  </CardTitle>
+                  <CardDescription className="text-sm">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span key={tech} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between pt-4">
+                    <Button variant="outline" size="sm" asChild>
+                      <a href={project.link} className="flex items-center gap-2">
+                        <ExternalLink className="h-4 w-4" />
+                        View Project
+                      </a>
+                    </Button>
+                    <Button variant="ghost" size="sm" asChild>
+                      <a href={project.github} className="flex items-center gap-2">
+                        <Github className="h-4 w-4" />
+                        Code
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link to="/projects" className="btn-secondary-hero inline-flex items-center group">
+              <span>View All Projects</span>
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
