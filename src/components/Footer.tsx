@@ -7,17 +7,17 @@ const Footer = () => {
   const socialLinks = [
     {
       name: "GitHub",
-      url: "https://github.com/umarmajeed",
+      url: "https://github.com/umarmajeedofficial",
       icon: Github,
     },
     {
       name: "LinkedIn",
-      url: "https://linkedin.com/in/umarmajeed",
+      url: "https://linkedin.com/in/umarmajeedofficial",
       icon: Linkedin,
     },
     {
       name: "Email",
-      url: "mailto:umar@example.com",
+      url: "mailto:umarmajeedofficial@gmail.com",
       icon: Mail,
     },
   ];
@@ -35,9 +35,9 @@ const Footer = () => {
               Umar Majeed
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              AI Engineer • Software Engineer • Researcher
+              AI/ML Engineer • Aspiring PhD Scholar • AI/ML Researcher
               <br />
-              Building the future with intelligent solutions.
+              Building intelligent solutions that shape the future.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Quick Links</h3>
             <nav className="flex flex-col space-y-2">
-              {["Home", "About", "Projects", "Contact"].map((link) => (
+              {["Home", "About", "Services", "Projects", "Articles", "Contact"].map((link) => (
                 <Link
                   key={link}
                   to={link === "Home" ? "/" : `/${link.toLowerCase()}`}

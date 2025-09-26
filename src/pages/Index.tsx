@@ -164,6 +164,80 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Featured Services Section */}
+      <section className="py-20 bg-gradient-to-br from-primary-soft/10 to-secondary-soft/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-8 mb-16">
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-primary-soft border border-primary/20 backdrop-blur-sm">
+              <Zap className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-primary">AI/ML Services</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              Featured <span className="text-gradient-primary">Services</span>
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
+              Cutting-edge AI and machine learning solutions to transform your business
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "Machine Learning Model Development",
+                description: "Custom ML models tailored to your business needs using TensorFlow, PyTorch, and scikit-learn.",
+                icon: Brain,
+                emoji: "🤖"
+              },
+              {
+                title: "AI-Powered Web Applications",
+                description: "Full-stack applications with integrated AI capabilities for enhanced user experiences.",
+                icon: Code2,
+                emoji: "🌐"
+              },
+              {
+                title: "Computer Vision Solutions",
+                description: "Advanced image recognition, object detection, and visual analysis systems.",
+                icon: Sparkles,
+                emoji: "👁️"
+              },
+              {
+                title: "Natural Language Processing",
+                description: "NLP solutions for text analysis, sentiment detection, and language understanding.",
+                icon: Brain,
+                emoji: "🗣️"
+              }
+            ].map((service, index) => (
+              <Card key={service.title} className="group hover:shadow-xl transition-all duration-300 animate-fade-in border-border/50 hover:border-primary/20" style={{ animationDelay: `${index * 0.1}s` }}>
+                <CardHeader className="text-center">
+                  <div className="text-4xl mb-4">{service.emoji}</div>
+                  <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                    {service.title}
+                  </CardTitle>
+                  <CardDescription className="text-sm">
+                    {service.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <Button className="w-full btn-hero text-sm" asChild>
+                    <Link to="/contact" className="flex items-center justify-center gap-2">
+                      Contact Me
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link to="/services" className="btn-secondary-hero inline-flex items-center group">
+              <span>View All Services</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Recent Work Section */}
       <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
