@@ -33,19 +33,19 @@ const Contact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "umar@example.com",
-      href: "mailto:umar@example.com"
+      value: "umarmajeedofficial@gmail.com",
+      href: "mailto:umarmajeedofficial@gmail.com"
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567"
+      value: "+923075588988",
+      href: "tel:+923075588988"
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: "Pakistan",
       href: null
     }
   ];
@@ -53,21 +53,21 @@ const Contact = () => {
   const socialLinks = [
     {
       name: "GitHub",
-      url: "https://github.com/umarmajeed",
+      url: "https://github.com/umarmajeedofficial",
       icon: Github,
-      username: "@umarmajeed"
+      username: "@umarmajeedofficial"
     },
     {
       name: "LinkedIn",
-      url: "https://linkedin.com/in/umarmajeed",
+      url: "https://linkedin.com/in/umarmajeedofficial",
       icon: Linkedin,
       username: "Umar Majeed"
     },
     {
       name: "Twitter",
-      url: "https://twitter.com/umarmajeed",
+      url: "https://twitter.com/DrUmarMajeed",
       icon: Twitter,
-      username: "@umarmajeed"
+      username: "@DrUmarMajeed"
     }
   ];
 

@@ -40,15 +40,19 @@ const Index = () => {
             </div>
 
             {/* Main Content - Desktop Layout */}
-            <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 text-center lg:text-left">
+            <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-12 text-center lg:text-left">
               {/* Profile Image - Desktop Only */}
               <div className="hidden lg:block">
-                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-white/20 shadow-lg backdrop-blur-sm animate-pulse">
-                  <img 
-                    src={profileImage} 
-                    alt="Umar Majeed - AI/ML Engineer" 
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative w-96 h-96 group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary-glow rounded-full animate-glow"></div>
+                  <div className="absolute inset-2 rounded-full overflow-hidden shadow-2xl backdrop-blur-sm">
+                    <img 
+                      src={profileImage} 
+                      alt="Umar Majeed - AI/ML Engineer" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
               </div>
 
@@ -56,20 +60,18 @@ const Index = () => {
               <div className="flex-1 lg:max-w-2xl">
                 {/* Main Headline */}
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                  <span className="block text-gray-800">Hi, I'm </span>
-                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">Umar Majeed 👋</span>
+                  <span className="block text-foreground">Hi, I'm </span>
+                  <span className="block text-gradient-hero">Umar Majeed 👋</span>
                 </h1>
 
                 {/* Subtitle */}
                 <div className="space-y-4 mt-6">
-                  <p className="text-xl sm:text-2xl text-gray-600 font-medium">
-                    <span className="text-blue-600 font-semibold">AI/ML Engineer</span> • 
-                    <span className="text-emerald-600 font-semibold"> Aspiring PhD Scholar</span> • 
-                    <span className="text-gray-800 font-semibold"> AI/ML Researcher</span>
+                  <p className="text-xl sm:text-2xl font-medium">
+                    <span className="text-gradient-primary font-semibold">AI/ML Engineer • Aspiring PhD Scholar • AI/ML Researcher</span>
                   </p>
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    Transforming complex problems into elegant solutions with cutting-edge AI and software engineering. 
-                    Building the future, one algorithm at a time.
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Transforming complex problems into elegant solutions with cutting-edge AI and machine learning. 
+                    Building intelligent systems that shape the future, one neural network at a time.
                   </p>
                 </div>
 
@@ -80,10 +82,20 @@ const Index = () => {
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                   
-                  <Button variant="outline" className="bg-white/80 border-gray-300 text-gray-700 hover:bg-white hover:border-gray-400 transition-all duration-200 group" asChild>
-                    <a href="/resume.pdf" download>
-                      <Download className="mr-2 h-4 w-4" />
-                      <span>Download CV</span>
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
+                    <Button variant="outline" className="relative bg-background/80 border-primary/20 text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 group" asChild>
+                      <a href="/resume.pdf" download>
+                        <Download className="mr-2 h-4 w-4" />
+                        <span>Download CV</span>
+                      </a>
+                    </Button>
+                  </div>
+
+                  <Button variant="outline" className="bg-background/80 border-secondary/20 text-foreground hover:bg-secondary/10 hover:border-secondary/40 transition-all duration-300" asChild>
+                    <a href="https://leetcode.com/umarmajeedofficial" target="_blank" rel="noopener noreferrer">
+                      <Code2 className="mr-2 h-4 w-4" />
+                      <span>Visit My LeetCode</span>
                     </a>
                   </Button>
                 </div>
