@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { user, isAdmin, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,10 +70,32 @@ const Navigation = () => {
                 </Link>
               ))}
               
-              {/* CTA Button */}
-              <Link to="/contact" className="btn-hero">
-                Let's Connect
-              </Link>
+              <div className="flex items-center gap-4">
+                {user ? (
+                  <div className="flex items-center gap-2">
+                    {isAdmin && (
+                      <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">
+                        Admin
+                      </span>
+                    )}
+                    <Button variant="ghost" size="sm" onClick={signOut}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <Button asChild>
+                    <Link to="/auth">
+                      <User className="h-4 w-4 mr-2" />
+                      Sign In
+                    </Link>
+                  </Button>
+                )}
+                
+                <Link to="/contact" className="btn-hero">
+                  Let's Connect
+                </Link>
+              </div>
             </div>
 
             {/* Mobile menu button */}
@@ -113,8 +138,30 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <div className="pt-2">
-              <Link to="/contact" className="btn-hero w-full text-center">
+            
+            <div className="mt-4 pt-4 border-t">
+              {user ? (
+                <div className="space-y-2">
+                  {isAdmin && (
+                    <div className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded text-center">
+                      Admin User
+                    </div>
+                  )}
+                  <Button variant="ghost" className="w-full justify-start" onClick={signOut}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <Button asChild className="w-full mb-2">
+                  <Link to="/auth">
+                    <User className="h-4 w-4 mr-2" />
+                    Sign In
+                  </Link>
+                </Button>
+              )}
+              
+              <Link to="/contact" className="btn-hero w-full text-center block">
                 Let's Connect
               </Link>
             </div>
