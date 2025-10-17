@@ -71,32 +71,9 @@ const Navigation = () => {
                 </a>
               ))}
               
-              <div className="flex items-center gap-4">
-                {user ? (
-                  <div className="flex items-center gap-2">
-                    {isAdmin && (
-                      <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">
-                        Admin
-                      </span>
-                    )}
-                    <Button variant="ghost" size="sm" onClick={signOut}>
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Sign Out
-                    </Button>
-                  </div>
-                ) : (
-                  <Button asChild>
-                    <Link to="/auth">
-                      <User className="h-4 w-4 mr-2" />
-                      Sign In
-                    </Link>
-                  </Button>
-                )}
-                
-                <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-hero">
-                  Let's Connect
-                </a>
-              </div>
+              <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-hero">
+                Let's Connect
+              </a>
             </div>
 
             {/* Mobile menu button */}
@@ -138,27 +115,6 @@ const Navigation = () => {
             ))}
             
             <div className="mt-4 pt-4 border-t">
-              {user ? (
-                <div className="space-y-2">
-                  {isAdmin && (
-                    <div className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded text-center">
-                      Admin User
-                    </div>
-                  )}
-                  <Button variant="ghost" className="w-full justify-start" onClick={signOut}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </Button>
-                </div>
-              ) : (
-                <Button asChild className="w-full mb-2">
-                  <Link to="/auth">
-                    <User className="h-4 w-4 mr-2" />
-                    Sign In
-                  </Link>
-                </Button>
-              )}
-              
               <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-hero w-full text-center block">
                 Let's Connect
               </a>

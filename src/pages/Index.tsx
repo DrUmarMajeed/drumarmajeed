@@ -74,10 +74,10 @@ const Index = () => {
   };
 
   const stats = [
-    { value: "5+", label: "Years Experience" },
-    { value: "50+", label: "Projects Completed" },
-    { value: "15+", label: "AI Models Deployed" },
-    { value: "1M+", label: "Users Impacted" },
+    { value: "3+", label: "Years Experience" },
+    { value: "100+", label: "Projects Completed" },
+    { value: "20+", label: "AI Models Deployed" },
+    { value: "700+", label: "LeetCode Problems" },
   ];
 
   const education = [
