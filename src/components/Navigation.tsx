@@ -24,13 +24,20 @@ const Navigation = () => {
   }, [location]);
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Projects", path: "/projects" },
-    { name: "Articles", path: "/articles" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "#home" },
+    { name: "About", path: "#about" },
+    { name: "Education", path: "#education" },
+    { name: "Projects", path: "#projects" },
+    { name: "Contact", path: "#contact" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+    const element = document.querySelector(path);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
@@ -54,20 +61,14 @@ const Navigation = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.name}
-                  to={item.path}
-                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-200 hover:text-primary ${
-                    location.pathname === item.path
-                      ? "text-primary"
-                      : "text-foreground/70"
-                  }`}
+                  href={item.path}
+                  onClick={(e) => handleNavClick(e, item.path)}
+                  className="relative px-3 py-2 text-sm font-medium transition-all duration-200 hover:text-primary text-foreground/70"
                 >
                   {item.name}
-                  {location.pathname === item.path && (
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-primary rounded-full"></span>
-                  )}
-                </Link>
+                </a>
               ))}
               
               <div className="flex items-center gap-4">
@@ -92,9 +93,9 @@ const Navigation = () => {
                   </Button>
                 )}
                 
-                <Link to="/contact" className="btn-hero">
+                <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-hero">
                   Let's Connect
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -126,17 +127,14 @@ const Navigation = () => {
         >
           <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md border-t border-border/50">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.name}
-                to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                  location.pathname === item.path
-                    ? "text-primary bg-primary/10"
-                    : "text-foreground/70 hover:text-primary hover:bg-muted"
-                }`}
+                href={item.path}
+                onClick={(e) => handleNavClick(e, item.path)}
+                className="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 text-foreground/70 hover:text-primary hover:bg-muted"
               >
                 {item.name}
-              </Link>
+              </a>
             ))}
             
             <div className="mt-4 pt-4 border-t">
@@ -161,9 +159,9 @@ const Navigation = () => {
                 </Button>
               )}
               
-              <Link to="/contact" className="btn-hero w-full text-center block">
+              <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-hero w-full text-center block">
                 Let's Connect
-              </Link>
+              </a>
             </div>
           </div>
         </div>

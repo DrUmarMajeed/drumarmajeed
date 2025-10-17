@@ -1,320 +1,428 @@
-import { ArrowRight, Download, Sparkles, Zap, Brain, Code2, GraduationCap, Trophy, ExternalLink, Github } from "lucide-react";
-import { Link } from "react-router-dom";
+import { 
+  ArrowRight, Code, Zap, Users, Download, ExternalLink, Github, Linkedin, 
+  Phone, Mail, Calendar, MapPin, Award, Brain, Rocket, Hash, Code2
+} from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import heroBg from "@/assets/hero-bg.jpg";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import profileImage from "@/assets/profile-image.jpg";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const { isAdmin } = useAuth();
+  const { toast } = useToast();
+  const [projects, setProjects] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      setProjects(data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const toggleFeatured = async (id: string, currentStatus: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .update({ featured: !currentStatus })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      toast({ title: "Project updated successfully" });
+      fetchProjects();
+    } catch (error) {
+      console.error('Error:', error);
+      toast({ title: "Failed to update project", variant: "destructive" });
+    }
+  };
+
+  const deleteProject = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this project?')) return;
+    
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      toast({ title: "Project deleted successfully" });
+      fetchProjects();
+    } catch (error) {
+      console.error('Error:', error);
+      toast({ title: "Failed to delete project", variant: "destructive" });
+    }
+  };
+
+  const stats = [
+    { value: "5+", label: "Years Experience" },
+    { value: "50+", label: "Projects Completed" },
+    { value: "15+", label: "AI Models Deployed" },
+    { value: "1M+", label: "Users Impacted" },
+  ];
+
+  const education = [
+    {
+      degree: "Master of Science in Artificial Intelligence",
+      school: "Stanford University",
+      period: "2017 - 2019",
+      details: "Specialized in Deep Learning and Computer Vision. Thesis on 'Novel Architectures for Real-time Object Detection'"
+    },
+    {
+      degree: "Bachelor of Science in Computer Science",
+      school: "MIT",
+      period: "2013 - 2017",
+      details: "Magna Cum Laude. Focus on Algorithms, Data Structures, and Software Engineering"
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl animate-float-delay"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/40 to-emerald-100/40 rounded-full blur-3xl"></div>
-        </div>
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(135deg, rgba(0, 119, 255, 0.9) 0%, rgba(16, 185, 129, 0.85) 100%), url(${profileImage})`,
+            backgroundBlendMode: 'overlay'
+          }}
+        />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+          <div className="mb-8 animate-fade-in-down">
+            <img 
+              src={profileImage}
+              alt="Umar Majeed"
+              className="w-40 h-40 rounded-full mx-auto border-4 border-white shadow-2xl object-cover"
+            />
+          </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8 animate-fade-in-up">
-            {/* Profile Image - Mobile Only */}
-            <div className="flex justify-center mb-8 lg:hidden">
-              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 shadow-lg backdrop-blur-sm">
-                <img 
-                  src={profileImage} 
-                  alt="Umar Majeed - AI/ML Engineer" 
-                  className="w-full h-full object-cover"
-                />
+          <h1 className="text-5xl sm:text-7xl font-bold text-white mb-6 animate-fade-in-up">
+            Umar Majeed
+          </h1>
+          
+          <p className="text-xl sm:text-3xl text-white/90 mb-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            AI Engineer & Machine Learning Expert
+          </p>
+          
+          <p className="max-w-2xl mx-auto text-lg text-white/80 mb-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            Building intelligent systems that transform data into actionable insights
+          </p>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            {stats.map((stat, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="text-4xl font-bold text-white mb-2">{stat.value}</div>
+                <div className="text-white/80 text-sm">{stat.label}</div>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Greeting */}
-            <div className="flex justify-center">
-              <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/50 backdrop-blur-sm shadow-sm">
-                <Sparkles className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-gray-700">Available for new opportunities</span>
-              </div>
-            </div>
+          {/* Action Buttons */}
+          <div className="flex flex-wrap gap-4 justify-center mb-8 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <Button asChild className="bg-white text-primary hover:bg-white/90">
+              <a href="https://drive.google.com/file/d/12pxfackoXzMRzjIj-R1trzHGEjbYZgDA/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
+                <Download className="mr-2 h-4 w-4" />
+                Download CV
+              </a>
+            </Button>
+            
+            <Button asChild variant="outline" className="bg-white/10 text-white border-white/30 hover:bg-white/20">
+              <a href="#contact">
+                <Mail className="mr-2 h-4 w-4" />
+                Contact Me
+              </a>
+            </Button>
+          </div>
 
-            {/* Main Content - Desktop Layout */}
-            <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-12 text-center lg:text-left">
-              {/* Profile Image - Desktop Only */}
-              <div className="hidden lg:block">
-                <div className="relative w-96 h-96 group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary-glow rounded-full animate-glow"></div>
-                  <div className="absolute inset-2 rounded-full overflow-hidden shadow-2xl backdrop-blur-sm">
-                    <img 
-                      src={profileImage} 
-                      alt="Umar Majeed - AI/ML Engineer" 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
-              </div>
-
-              {/* Text Content */}
-              <div className="flex-1 lg:max-w-2xl">
-                {/* Main Headline */}
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                  <span className="block text-foreground">Hi, I'm </span>
-                  <span className="block text-gradient-hero">Umar Majeed 👋</span>
-                </h1>
-
-                {/* Subtitle */}
-                <div className="space-y-4 mt-6">
-                  <p className="text-xl sm:text-2xl font-medium">
-                    <span className="text-gradient-primary font-semibold">AI/ML Engineer • Aspiring PhD Scholar • AI/ML Researcher</span>
-                  </p>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    Transforming complex problems into elegant solutions with cutting-edge AI and machine learning. 
-                    Building intelligent systems that shape the future, one neural network at a time.
-                  </p>
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center lg:items-start lg:justify-start justify-center gap-4 pt-8">
-                  <Link to="/projects" className="btn-hero group">
-                    <span>View My Work</span>
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                  
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
-                    <Button variant="outline" className="relative bg-background/80 border-primary/20 text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 group" asChild>
-                      <a href="/resume.pdf" download>
-                        <Download className="mr-2 h-4 w-4" />
-                        <span>Download CV</span>
-                      </a>
-                    </Button>
-                  </div>
-
-                  <Button variant="outline" className="bg-background/80 border-secondary/20 text-foreground hover:bg-secondary/10 hover:border-secondary/40 transition-all duration-300" asChild>
-                    <a href="https://leetcode.com/umarmajeedofficial" target="_blank" rel="noopener noreferrer">
-                      <Code2 className="mr-2 h-4 w-4" />
-                      <span>Visit My LeetCode</span>
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 pt-16 max-w-4xl mx-auto text-center">
-              {[{
-                icon: Brain,
-                label: "AI Models",
-                value: "15+"
-              }, {
-                icon: Zap,
-                label: "Projects",
-                value: "50+"
-              }, {
-                icon: Sparkles,
-                label: "Experience",
-                value: "5+ Years"
-              }, {
-                icon: Code2,
-                label: "LeetCode",
-                value: "700+"
-              }, {
-                icon: GraduationCap,
-                label: "Teaching Hours",
-                value: "200+"
-              }, {
-                icon: Trophy,
-                label: "Hackathons",
-                value: "20+"
-              }].map((stat, index) => (
-                <div key={stat.label} className="text-center space-y-2 animate-scale-in" style={{
-                  animationDelay: `${index * 0.1}s`
-                }}>
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/80 border border-gray-200/50 shadow-sm">
-                    <stat.icon className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+          {/* Social Links */}
+          <div className="flex flex-wrap gap-3 justify-center animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <Button asChild size="sm" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
+              <a href="https://github.com/umarmajeedofficial" target="_blank" rel="noopener noreferrer">
+                <Github className="h-4 w-4 mr-2" />
+                GitHub
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
+              <a href="https://linkedin.com/in/umarmajeedofficial" target="_blank" rel="noopener noreferrer">
+                <Linkedin className="h-4 w-4 mr-2" />
+                LinkedIn
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
+              <a href="https://hashnode.com/@umarmajeed" target="_blank" rel="noopener noreferrer">
+                <Hash className="h-4 w-4 mr-2" />
+                Blog
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
+              <a href="https://wa.me/+923075588988" target="_blank" rel="noopener noreferrer">
+                <Phone className="h-4 w-4 mr-2" />
+                WhatsApp
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
+              <a href="https://leetcode.com/umarmajeedofficial" target="_blank" rel="noopener noreferrer">
+                <Code2 className="h-4 w-4 mr-2" />
+                LeetCode
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
+              <a href="https://codeforces.com/profile/umarmajeed" target="_blank" rel="noopener noreferrer">
+                <Code className="h-4 w-4 mr-2" />
+                Codeforces
+              </a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Brief About Section */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-              Passionate About <span className="text-gradient-primary">Innovation</span>
+      {/* About Section */}
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+              About <span className="text-gradient-primary">Me</span>
             </h2>
             <p className="max-w-3xl mx-auto text-lg text-muted-foreground leading-relaxed">
-              With expertise spanning artificial intelligence, machine learning, and full-stack development, 
-              I create intelligent solutions that push the boundaries of what's possible. From neural networks 
-              to scalable web applications, I bring ideas to life with precision and creativity.
+              I'm a passionate AI engineer and researcher with a deep love for solving complex problems 
+              through innovative technology. My journey spans from theoretical research to production 
+              systems that impact millions of users.
             </p>
-            <Link to="/about" className="btn-secondary-hero inline-flex items-center group">
-              <span>Learn More About Me</span>
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+          </div>
+
+          {/* Skills Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="card-premium">
+              <CardContent className="p-6">
+                <Brain className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">AI & ML</h3>
+                <p className="text-muted-foreground mb-4">TensorFlow, PyTorch, Scikit-learn, OpenAI GPT</p>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-gradient-primary h-2 rounded-full" style={{ width: '95%' }}></div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="card-premium">
+              <CardContent className="p-6">
+                <Code className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">Programming</h3>
+                <p className="text-muted-foreground mb-4">Python, JavaScript, TypeScript, Go, C++</p>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-gradient-primary h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="card-premium">
+              <CardContent className="p-6">
+                <Zap className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">Web Development</h3>
+                <p className="text-muted-foreground mb-4">React, Next.js, Node.js, FastAPI</p>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div className="bg-gradient-primary h-2 rounded-full" style={{ width: '88%' }}></div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Featured Services Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-soft/10 to-secondary-soft/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-8 mb-16">
-            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-primary-soft border border-primary/20 backdrop-blur-sm">
-              <Zap className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">AI/ML Services</span>
+      {/* Education Section */}
+      <section id="education" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center space-x-3 mb-12 justify-center animate-slide-in-left">
+            <Brain className="h-8 w-8 text-primary" />
+            <h2 className="text-4xl font-bold text-foreground">Education</h2>
+          </div>
+          
+          <div className="space-y-6 max-w-4xl mx-auto">
+            {education.map((edu, index) => (
+              <Card 
+                key={index}
+                className="card-premium animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <CardContent className="p-6">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-foreground mb-1">{edu.degree}</h3>
+                      <p className="text-primary font-medium mb-2">{edu.school}</p>
+                      <p className="text-muted-foreground">{edu.details}</p>
+                    </div>
+                    <div className="lg:text-right lg:ml-6 mt-2 lg:mt-0">
+                      <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                        <Calendar className="h-4 w-4" />
+                        <span>{edu.period}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+              Featured <span className="text-gradient-primary">Projects</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              A showcase of my latest work demonstrating expertise in AI, machine learning, 
+              and full-stack development.
+            </p>
+          </div>
+
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-              Featured <span className="text-gradient-primary">Services</span>
-            </h2>
-            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
-              Cutting-edge AI and machine learning solutions to transform your business
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: "Machine Learning Model Development",
-                description: "Custom ML models tailored to your business needs using TensorFlow, PyTorch, and scikit-learn.",
-                icon: Brain,
-                emoji: "🤖"
-              },
-              {
-                title: "AI-Powered Web Applications",
-                description: "Full-stack applications with integrated AI capabilities for enhanced user experiences.",
-                icon: Code2,
-                emoji: "🌐"
-              },
-              {
-                title: "Computer Vision Solutions",
-                description: "Advanced image recognition, object detection, and visual analysis systems.",
-                icon: Sparkles,
-                emoji: "👁️"
-              },
-              {
-                title: "Natural Language Processing",
-                description: "NLP solutions for text analysis, sentiment detection, and language understanding.",
-                icon: Brain,
-                emoji: "🗣️"
-              }
-            ].map((service, index) => (
-              <Card key={service.title} className="group hover:shadow-xl transition-all duration-300 animate-fade-in border-border/50 hover:border-primary/20" style={{ animationDelay: `${index * 0.1}s` }}>
-                <CardHeader className="text-center">
-                  <div className="text-4xl mb-4">{service.emoji}</div>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                    {service.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <Button className="w-full btn-hero text-sm" asChild>
-                    <Link to="/contact" className="flex items-center justify-center gap-2">
-                      Contact Me
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link to="/services" className="btn-secondary-hero inline-flex items-center group">
-              <span>View All Services</span>
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.filter(p => p.featured).map((project, index) => (
+                <Card 
+                  key={project.id}
+                  className="card-premium group animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors flex-1">
+                        {project.title}
+                      </h3>
+                      {isAdmin && (
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant={project.featured ? "default" : "outline"}
+                            onClick={() => toggleFeatured(project.id, project.featured)}
+                          >
+                            ⭐
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => deleteProject(project.id)}
+                          >
+                            🗑️
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                      {project.description}
+                    </p>
+                    
+                    {project.technologies && (
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {project.technologies.map((tech: string, i: number) => (
+                          <Badge key={i} variant="outline" className="text-xs">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <div className="flex space-x-3">
+                      {project.demo_url && (
+                        <Button asChild size="sm" className="flex-1">
+                          <a href={project.demo_url} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-3 w-3 mr-1" />
+                            View
+                          </a>
+                        </Button>
+                      )}
+                      {project.github_url && (
+                        <Button asChild size="sm" variant="outline" className="flex-1">
+                          <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+                            <Github className="h-3 w-3 mr-1" />
+                            Code
+                          </a>
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Recent Work Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-8 mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-              Recent <span className="text-gradient-primary">Work</span>
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+              Let's <span className="text-gradient-primary">Connect</span>
             </h2>
-            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
-              Explore some of my latest projects showcasing AI/ML innovation and software engineering excellence
+            <p className="text-lg text-muted-foreground">
+              I'm always excited to discuss new opportunities and innovative projects.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "AI-Powered Recommendation System",
-                description: "Built a machine learning recommendation engine using collaborative filtering and neural networks, achieving 95% accuracy in user preference prediction.",
-                tech: ["Python", "TensorFlow", "React", "FastAPI"],
-                link: "#",
-                github: "#"
-              },
-              {
-                title: "Real-time Chat Application",
-                description: "Developed a scalable real-time messaging platform with WebSocket integration, supporting 10K+ concurrent users.",
-                tech: ["Node.js", "Socket.io", "React", "MongoDB"],
-                link: "#",
-                github: "#"
-              },
-              {
-                title: "Computer Vision Analytics",
-                description: "Created an advanced image recognition system for automated quality control in manufacturing processes.",
-                tech: ["OpenCV", "PyTorch", "Docker", "AWS"],
-                link: "#",
-                github: "#"
-              }
-            ].map((project, index) => (
-              <Card key={project.title} className="group hover:shadow-lg transition-all duration-300 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <CardHeader>
-                  <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span key={tech} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between pt-4">
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={project.link} className="flex items-center gap-2">
-                        <ExternalLink className="h-4 w-4" />
-                        View Project
-                      </a>
-                    </Button>
-                    <Button variant="ghost" size="sm" asChild>
-                      <a href={project.github} className="flex items-center gap-2">
-                        <Github className="h-4 w-4" />
-                        Code
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="card-premium text-center">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Mail className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">Email</h3>
+                <a href="mailto:umarmajeedofficial@gmail.com" className="text-muted-foreground hover:text-primary">
+                  umarmajeedofficial@gmail.com
+                </a>
+              </CardContent>
+            </Card>
 
-          <div className="text-center mt-12">
-            <Link to="/projects" className="btn-secondary-hero inline-flex items-center group">
-              <span>View All Projects</span>
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <Card className="card-premium text-center">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Phone className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">Phone</h3>
+                <a href="https://wa.me/+923075588988" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
+                  +92 307 5588988
+                </a>
+              </CardContent>
+            </Card>
+
+            <Card className="card-premium text-center">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Linkedin className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">LinkedIn</h3>
+                <a href="https://linkedin.com/in/umarmajeedofficial" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
+                  Connect with me
+                </a>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
